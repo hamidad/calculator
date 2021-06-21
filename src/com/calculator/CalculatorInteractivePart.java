@@ -7,8 +7,12 @@ import com.calculator.enums.Operation;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CalculatorInteractivePart extends JPanel {
+
+    private String calculatorStr = ""; // Set of numbers and operations in string form
 
     private static final String[] calculatorElements = {
             Operation.CLEAR_ENTRY.getValue(),
@@ -64,18 +68,46 @@ public class CalculatorInteractivePart extends JPanel {
     private void handleDigitButton(String number) {
         DigitButton button = new DigitButton(number);
         addDigitButtonToPanel(button);
+        addDigitButtonMousePressedListener(button);
     }
 
     private void addDigitButtonToPanel(DigitButton button) {
         add(button);
     }
 
+    private void addDigitButtonMousePressedListener(DigitButton button) {
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                digitButtonClicked(button);
+            }
+        });
+    }
+
+    private void digitButtonClicked(DigitButton button) {
+        calculatorStr += button.getText();
+    }
+
     private void handleOperation(String operation) {
         OperationButton button = new OperationButton(operation);
         addOperationButtonToPanel(button);
+        addOperationButtonMousePressedListener(button);
     }
 
     private void addOperationButtonToPanel(OperationButton button) {
         add(button);
+    }
+
+    private void addOperationButtonMousePressedListener(OperationButton button) {
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                operationButtonClicked(button);
+            }
+        });
+    }
+
+    private void operationButtonClicked(OperationButton button) {
+        calculatorStr += button.getText();
     }
 }
