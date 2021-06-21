@@ -1,6 +1,7 @@
 package com.calculator;
 
 import com.calculator.app_constants.AppConstants;
+import com.calculator.app_utils.AppUtils;
 import com.calculator.buttons.DigitButton;
 import com.calculator.buttons.OperationButton;
 import com.calculator.enums.Operation;
@@ -108,6 +109,42 @@ public class CalculatorInteractivePart extends JPanel {
     }
 
     private void operationButtonClicked(OperationButton button) {
+
+        String operationVal = button.getText();
+
+        /**
+         * If chosen operation doesn't belong to predefined in Operation enum or
+         * calculatorStr is empty (eg. no number)
+         * Return
+         */
+        if (!Operation.isOperation(operationVal) ||
+                calculatorStr.equals("")) {
+            return;
+        }
+
+        /**
+         * On CLEAR, clear/empty calculator
+         */
+        if (operationVal.equals(Operation.CLEAR.getValue())) {
+            clearCalculator();
+            return;
+        }
+
+        String lastCalcChar = AppUtils.getLastChar((calculatorStr));
+
+        /**
+         * If last entered operation is DMAS
+         * Return
+         */
+        if (Operation.isDMASOperation(lastCalcChar) ||
+                lastCalcChar.equals(Operation.ADD_DECIMAL_POINT.getValue())) {
+            return;
+        }
+
         calculatorStr += button.getText();
+    }
+
+    private void clearCalculator() {
+        calculatorStr = "";
     }
 }

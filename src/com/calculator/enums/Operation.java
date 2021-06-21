@@ -45,4 +45,11 @@ public enum Operation {
         return AppUtils.arrayContainsValue(getValues(), operationVal);
     }
 
+    public static boolean isDMASOperation(String operation) {
+        return operation.equals(Operation.DIVISION.getValue()) ||
+                operation.equals(Operation.MULTIPLICATION.getValue()) ||
+                operation.equals(Operation.ADDITION.getValue()) ||
+                operation.equals(Operation.SUBTRACTION.getValue());
+    }
+
 }
