@@ -18,7 +18,7 @@ public final class AppConstants {
         public static final int HEADER_HEIGHT = 100;
 
         public static final int INTERACTIVE_CALC_PART_WIDTH = 400;
-        public static final int INTERACTIVE_CALC_PART_HEIGHT = 400;
+        public static final int INTERACTIVE_CALC_PART_HEIGHT = 350;
 
         public static final int BG_COLOR_R = 191;
         public static final int BG_COLOR_G = 191;
