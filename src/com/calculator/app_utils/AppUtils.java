@@ -17,4 +17,20 @@ public final class AppUtils {
         }
         return null;
     }
+
+    public static String removeLastChar(String str) {
+        return removeLastChars(str, 1);
+    }
+
+    public static String removeLastChars(String str, int chars) {
+        if (str.length() >= chars) {
+            return str.substring(0, str.length() - chars);
+        }
+        return str;
+    }
+
+    public static boolean charIsDigit(char character) {
+        return Character.toString(character).matches("\\d+");
+    }
+
 }

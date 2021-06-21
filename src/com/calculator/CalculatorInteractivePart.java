@@ -141,10 +141,78 @@ public class CalculatorInteractivePart extends JPanel {
             return;
         }
 
-        calculatorStr += button.getText();
+        /**
+         * TODO - Define action on ± operation click
+         */
+        if (operationVal.equals(Operation.REVERSE_NUMBER_STATUS.getValue())) {
+            return;
+        }
+
+        if (operationVal.equals(Operation.CLEAR_ENTRY.getValue())) {
+            calculatorStr = clearLastDigitEntry(calculatorStr);
+            return;
+        }
+
+        if (operationVal.equals(Operation.CLEAR_PREV_NUM.getValue())) {
+            calculatorStr = clearLastNumber(calculatorStr);
+            return;
+        }
+
+        /**
+         * TODO - Define action on = (equal) click
+         */
+        if (operationVal.equals(Operation.CALCULATE.getValue())) {
+            return;
+        }
+
+        if (!Operation.isDMASOperation(lastCalcChar)) {
+            calculatorStr += button.getText();
+        }
     }
 
     private void clearCalculator() {
         calculatorStr = "";
+    }
+
+    /**
+     * This function takes String calculatorStr as parameter and keeps removing last chars from string as long
+     * as they are digits
+     * @param calculatorStr
+     * @return String
+     */
+    private String clearLastDigitEntry(String calculatorStr) {
+        if (calculatorStr.equals("")) {
+            return null;
+        }
+
+        char[] calculatorCharts = calculatorStr.toCharArray();
+        int i = calculatorCharts.length - 1;
+
+        while (true) {
+            char character = calculatorCharts[i];
+            boolean charIsDigit = AppUtils.charIsDigit(character);
+
+            if (!charIsDigit) {
+                break;
+            }
+
+            calculatorStr = AppUtils.removeLastChar(calculatorStr);
+            i--;
+        }
+
+        return calculatorStr;
+    }
+
+    /**
+     * This function checks for last char in string and removes it if it is digit
+     * @param calculatorStr
+     * @return
+     */
+    private String clearLastNumber(String calculatorStr) {
+        boolean charIsDigit = AppUtils.getLastChar(calculatorStr).matches("\\d+");
+        if (charIsDigit) {
+            calculatorStr = AppUtils.removeLastChar(calculatorStr);
+        }
+        return calculatorStr;
     }
 }
