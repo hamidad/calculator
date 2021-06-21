@@ -41,6 +41,15 @@ public enum Operation {
         return this.getValue();
     }
 
+    public static Operation getOperation(String operationVal) {
+        for (Operation operation : Operation.values()) {
+            if (operation.value.equals(operationVal)) {
+                return operation;
+            }
+        }
+        return null;
+    }
+
     public static boolean isOperation(String operationVal) {
         return AppUtils.arrayContainsValue(getValues(), operationVal);
     }
@@ -52,4 +61,27 @@ public enum Operation {
                 operation.equals(Operation.SUBTRACTION.getValue());
     }
 
+    public static Double calculate(Double operand1, Double operand2, Operation operation) {
+
+        Double result;
+
+        switch (operation) {
+            case ADDITION:
+                result = operand1 + operand2;
+                break;
+            case SUBTRACTION:
+                result = operand1 - operand2;
+                break;
+            case MULTIPLICATION:
+                result = operand1 * operand2;
+                break;
+            case DIVISION:
+                result = operand1 / operand2;
+                break;
+            default:
+                result = null;
+                break;
+        }
+        return result;
+    }
 }

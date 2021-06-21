@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CalculatorInteractivePart extends JPanel {
 
@@ -36,6 +38,16 @@ public class CalculatorInteractivePart extends JPanel {
             "0",
             Operation.ADD_DECIMAL_POINT.getValue(),
             Operation.CALCULATE.getValue()
+    };
+
+    private static final String[] HIGH_PRECEDENCE_OPERATIONS = {
+            Operation.DIVISION.getValue(),
+            Operation.MULTIPLICATION.getValue()
+    };
+
+    private static final String[] LOW_PRECEDENCE_OPERATIONS = {
+            Operation.ADDITION.getValue(),
+            Operation.SUBTRACTION.getValue()
     };
 
     CalculatorInteractivePart() {
@@ -159,9 +171,11 @@ public class CalculatorInteractivePart extends JPanel {
         }
 
         /**
-         * TODO - Define action on = (equal) click
+         * Calculate result
          */
         if (operationVal.equals(Operation.CALCULATE.getValue())) {
+            String result = calculateFinalResult(calculatorStr);
+            clearCalculator();
             return;
         }
 
@@ -214,5 +228,91 @@ public class CalculatorInteractivePart extends JPanel {
             calculatorStr = AppUtils.removeLastChar(calculatorStr);
         }
         return calculatorStr;
+    }
+
+    private String calculateFinalResult(String calculatorStr) {
+        // Split string by operations, including DMAS operations
+        String[] calculatorElementsArray = calculatorStr.split("(?=[÷×+–]+)|(?<=[÷×+–])");
+
+        // Creating an ArrayList to be able change/remove elements
+        ArrayList<String> calculatorElements = new ArrayList<String>(Arrays.asList(calculatorElementsArray));
+
+        calculatorElements = calculate(calculatorElements);
+
+        // Result is only left element from array list
+        return calculatorElements.get(0);
+    }
+
+
+    private ArrayList<String> calculate(ArrayList<String> calculatorElements) {
+        while (containsHighPrecedenceOperations(calculatorElements)) {
+            calculatorElements = calculatePerOperations(calculatorElements, HIGH_PRECEDENCE_OPERATIONS);
+        }
+
+        calculatorElements = calculatePerOperations(calculatorElements, LOW_PRECEDENCE_OPERATIONS);
+
+        return calculatorElements;
+    }
+
+    /**
+     * This functions takes as parameters
+     * @param calculatorElements which is list of String elements (numbers and operations) eg. "34.4", "+", "34", "*", "100"
+     * @param operations which should calculate pairs of numbers (num1, operation, num2), calculate result,
+     *                   set result as num1, remove operation and num2 from array list.
+     *                   Do this recursively (while provided operations are still in the array list)
+     * @return new updated ArrayList<String>
+     */
+    private ArrayList<String> calculatePerOperations(ArrayList<String> calculatorElements, String[] operations) {
+        if (calculatorElements.size() == 0) {
+            return null;
+        }
+
+        for (int i = 0; i < calculatorElements.size(); i++) {
+
+            // Take calc element which could be a string number or string operation
+            String calcElement = calculatorElements.get(i);
+
+            // Do action only if string represents DMAS operation
+            if (Operation.isDMASOperation(calcElement)) {
+
+                Operation operation = Operation.getOperation(calcElement);
+
+                if (AppUtils.arrayContainsValue(operations, calcElement)) {
+
+                    int prevElIndex = i - 1;
+                    int operationElIndex = i;
+                    int nextElIndex = i + 1;
+
+                    String previousElement = calculatorElements.get(prevElIndex);
+                    String nextElement = calculatorElements.get(nextElIndex);
+
+                    Double operand1 = Double.parseDouble(previousElement);
+                    Double operand2 = Double.parseDouble(nextElement);
+                    Double result = Operation.calculate(operand1, operand2, operation);
+
+                    calculatorElements.set(prevElIndex, Double.toString(result));
+                    calculatorElements.remove(nextElIndex);
+                    calculatorElements.remove(operationElIndex);
+
+                    /**
+                     * Eg. {"2", "*", "2"...} will produce {"4"...}
+                     */
+
+                    // Repeat process while there are operations in the list
+                    calculatePerOperations(calculatorElements, operations);
+                }
+            }
+        }
+
+        return calculatorElements;
+    }
+
+    private boolean containsHighPrecedenceOperations(ArrayList<String> calculatorElements) {
+        for (String operation : HIGH_PRECEDENCE_OPERATIONS) {
+            if (calculatorElements.contains(operation)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
