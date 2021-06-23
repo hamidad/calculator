@@ -7,6 +7,8 @@ import java.awt.*;
 
 public class CalculatorHeader extends JPanel {
 
+    private JLabel label = new JLabel();
+
     CalculatorHeader() {
         setBackground(new Color(
                 AppConstants.CalculatorConstants.BG_COLOR_R,
@@ -19,5 +21,18 @@ public class CalculatorHeader extends JPanel {
         ));
 
         setLayout(new BorderLayout());
+
+        setLabelSettings();
+        add(label);
+    }
+
+    private void setLabelSettings() {
+        label.setHorizontalAlignment(JLabel.RIGHT);
+        label.setVerticalAlignment(JLabel.BOTTOM);
+        label.setFont(new Font("Arial", Font.BOLD, 40));
+    }
+
+    public void setText(String text) {
+        label.setText(text);
     }
 }

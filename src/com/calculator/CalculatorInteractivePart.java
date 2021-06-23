@@ -50,7 +50,11 @@ public class CalculatorInteractivePart extends JPanel {
             Operation.SUBTRACTION.getValue()
     };
 
-    CalculatorInteractivePart() {
+    private CalculatorHeader calculatorHeader;
+
+    CalculatorInteractivePart(CalculatorHeader calculatorHeader) {
+        this.calculatorHeader = calculatorHeader;
+
         setPanelSettings();
 
         for (String calculatorElement : calculatorElements) {
