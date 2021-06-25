@@ -37,7 +37,7 @@ public class CalculatorFrame extends JFrame {
     }
 
     private void addInteractivePart() {
-        CalculatorInteractivePart interactivePart = new CalculatorInteractivePart();
+        CalculatorInteractivePart interactivePart = new CalculatorInteractivePart(header);
         add(interactivePart, BorderLayout.SOUTH);
     }
 }
