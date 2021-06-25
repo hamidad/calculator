@@ -144,6 +144,7 @@ public class CalculatorInteractivePart extends JPanel {
          */
         if (operationVal.equals(Operation.CLEAR.getValue())) {
             clearCalculator();
+            setCalcHeaderText("");
             return;
         }
 
@@ -167,11 +168,13 @@ public class CalculatorInteractivePart extends JPanel {
 
         if (operationVal.equals(Operation.CLEAR_ENTRY.getValue())) {
             calculatorStr = clearLastDigitEntry(calculatorStr);
+            setCalcHeaderText(calculatorStr);
             return;
         }
 
         if (operationVal.equals(Operation.CLEAR_PREV_NUM.getValue())) {
             calculatorStr = clearLastNumber(calculatorStr);
+            setCalcHeaderText(calculatorStr);
             return;
         }
 
