@@ -102,7 +102,8 @@ public class CalculatorInteractivePart extends JPanel {
     }
 
     private void digitButtonClicked(DigitButton button) {
-        calculatorStr += button.getText();
+        calculatorStr = concatCalcStr(button.getText());
+        setCalcHeaderText(calculatorStr);
     }
 
     private void handleOperation(String operation) {
@@ -179,17 +180,28 @@ public class CalculatorInteractivePart extends JPanel {
          */
         if (operationVal.equals(Operation.CALCULATE.getValue())) {
             String result = calculateFinalResult(calculatorStr);
+            calculatorStr = concatCalcStr(" = " + result);
+            setCalcHeaderText(calculatorStr);
             clearCalculator();
             return;
         }
 
         if (!Operation.isDMASOperation(lastCalcChar)) {
-            calculatorStr += button.getText();
+            calculatorStr = concatCalcStr(button.getText());
+            setCalcHeaderText(calculatorStr);
         }
     }
 
     private void clearCalculator() {
         calculatorStr = "";
+    }
+
+    private String concatCalcStr(String text) {
+        return calculatorStr += text;
+    }
+
+    private void setCalcHeaderText(String text) {
+        calculatorHeader.setText(text);
     }
 
     /**
