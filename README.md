@@ -1,10 +1,10 @@
-#Calculator developed in JAVA using javax.swing & java.awt libraries
+# Calculator developed in JAVA using javax.swing & java.awt libraries
 
 <br/>
 
 This is a standard calculator developed in JAVA using javax.swing & java.awt libraries. The program uses basic JFrame GUI which, then, contains set of JPanels, JButtons and JLabels. 
 
-##Calculator frame consists of: <br/>
+## Calculator frame consists of: <br/>
 -  Header - Which is used to display user's input and calculator result <br/>
 -  Interactive part which is a set of: <br/>
     -  Operations
@@ -21,7 +21,7 @@ This is a standard calculator developed in JAVA using javax.swing & java.awt lib
     -  Digit numbers
         -  0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 
-##Program flow:
+## Program flow:
 1. Interactive part allows user to choose numbers and/or operations
 2. Every choice rebuilds the calculator string which is a set of choosen numbers and operations
 3. Result calculation <br/>
