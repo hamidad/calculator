@@ -182,10 +182,7 @@ public class CalculatorInteractivePart extends JPanel {
          * Calculate result
          */
         if (operationVal.equals(Operation.CALCULATE.getValue())) {
-            String result = calculateFinalResult(calculatorStr);
-            calculatorStr = concatCalcStr(" = " + result);
-            setCalcHeaderText(calculatorStr);
-            clearCalculator();
+            doActionsOnCalculateClick();
             return;
         }
 
@@ -247,6 +244,20 @@ public class CalculatorInteractivePart extends JPanel {
             calculatorStr = AppUtils.removeLastChar(calculatorStr);
         }
         return calculatorStr;
+    }
+
+    private void doActionsOnCalculateClick() {
+        try {
+            String result = calculateFinalResult(calculatorStr);
+            calculatorStr = concatCalcStr(" = " + result);
+            setCalcHeaderText(calculatorStr);
+        }
+        catch (Exception e) {
+            calculatorStr = AppConstants.CalculatorConstants.DEFAULT_ERROR_INDICATOR;
+            setCalcHeaderText(calculatorStr);
+        }
+
+        clearCalculator();
     }
 
     private String calculateFinalResult(String calculatorStr) {
