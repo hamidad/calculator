@@ -252,6 +252,10 @@ public class CalculatorInteractivePart extends JPanel {
             calculatorStr = concatCalcStr(" = " + result);
             setCalcHeaderText(calculatorStr);
         }
+        catch (ArithmeticException e) {
+            calculatorStr = e.getMessage();
+            setCalcHeaderText(calculatorStr);
+        }
         catch (Exception e) {
             calculatorStr = AppConstants.CalculatorConstants.DEFAULT_ERROR_INDICATOR;
             setCalcHeaderText(calculatorStr);
