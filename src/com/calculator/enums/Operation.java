@@ -1,5 +1,6 @@
 package com.calculator.enums;
 
+import com.calculator.app_constants.AppConstants;
 import com.calculator.app_utils.AppUtils;
 
 import java.util.List;
@@ -67,21 +68,41 @@ public enum Operation {
 
         switch (operation) {
             case ADDITION:
-                result = operand1 + operand2;
+                result = add(operand1, operand2);
                 break;
             case SUBTRACTION:
-                result = operand1 - operand2;
+                result = subtract(operand1, operand2);
                 break;
             case MULTIPLICATION:
-                result = operand1 * operand2;
+                result = multiply(operand1, operand2);
                 break;
             case DIVISION:
-                result = operand1 / operand2;
+                result = divide(operand1, operand2);
                 break;
             default:
                 result = null;
                 break;
         }
         return result;
+    }
+
+    public static Double add(Double operand1, Double operand2) {
+        return operand1 + operand2;
+    }
+
+    public static Double subtract(Double operand1, Double operand2) {
+        return operand1 - operand2;
+    }
+
+    public static Double multiply(Double operand1, Double operand2) {
+        return operand1 * operand2;
+    }
+
+    public static Double divide(Double operand1, Double operand2) {
+       if (operand2 == 0) {
+           throw new ArithmeticException(AppConstants.CalculatorConstants.DIVISION_BY_0_ERROR_MSG);
+       }
+
+       return operand1 / operand2;
     }
 }
