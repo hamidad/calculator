@@ -10,6 +10,7 @@ public final class AppConstants {
         }
 
         public static final String TITLE = "Calculator";
+        public static final String DEFAULT_ERROR_INDICATOR = "ERROR";
 
         public static final int FRAME_WIDTH = 400;
         public static final int FRAME_HEIGHT = 500;
