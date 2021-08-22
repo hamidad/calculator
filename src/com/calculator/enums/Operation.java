@@ -3,6 +3,7 @@ package com.calculator.enums;
 import com.calculator.app_constants.AppConstants;
 import com.calculator.app_utils.AppUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -91,7 +92,11 @@ public enum Operation {
     }
 
     public static Double subtract(Double operand1, Double operand2) {
-        return operand1 - operand2;
+        BigDecimal operand1BD = BigDecimal.valueOf(operand1);
+        BigDecimal operand2BD = BigDecimal.valueOf(operand2);
+        BigDecimal result = operand1BD.subtract(operand2BD);
+
+        return result.doubleValue();
     }
 
     public static Double multiply(Double operand1, Double operand2) {
